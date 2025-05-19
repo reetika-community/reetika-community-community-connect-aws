@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Projects from './pages/Projects';
-import AdminDashboard from './pages/AdminDashboard';
-import ProtectedRoute from './components/ProtectedRoute';
+import Login from './pages/Login.js';
+import Register from './pages/Register.js';
+import Projects from './pages/Project.js';
+import AdminDashboard from './pages/AdminDashboard.js';
+import ProtectedRoute from './components/ProtectedRoute.js';
 
 function App() {
   return (
