@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://YOUR_EC2_PUBLIC_IP:5000/api', // replace this
+  baseURL: 'http://13.60.55.246:5000/api', // replace this
 });
 
 instance.interceptors.request.use((config) => {
