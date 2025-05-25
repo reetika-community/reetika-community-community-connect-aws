@@ -1,6 +1,0 @@
-#Ignore enviroment config
-server/.env
-#ignore 
-node_modules/
-#Ignore logs
-*.log
