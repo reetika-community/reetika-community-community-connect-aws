@@ -1,24 +1,38 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-export const AuthContext = createContext();
+export const AuthContext = createContext({});
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(() => {
-    const user = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
-    return user && token ? { user: JSON.parse(user), token } : null;
+    const storedUser = localStorage.getItem('user');
+    const storedToken = localStorage.getItem('token');
+    return storedUser && storedToken ? { user: JSON.parse(storedUser), token: storedToken } : null;
   });
+  const [loading, setLoading] = useState(true);
 
-  const login = (user, token) => {
-    localStorage.setItem('user', JSON.stringify(user));
+  useEffect(() => {
+    // This useEffect is to handle initial loading of auth state,
+    // which is already done by the useState initializer.
+    // However, if you had asynchronous checks (e.g., validating token with API),
+    // this is where you'd put them.
+    setLoading(false);
+  }, []);
+
+  const login = (userData, token) => {
+    setAuth({ user: userData, token });
+    localStorage.setItem('user', JSON.stringify(userData));
     localStorage.setItem('token', token);
-    setAuth({ user, token });
   };
 
   const logout = () => {
-    localStorage.clear();
     setAuth(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
   };
+
+  if (loading) {
+    return <div>Loading authentication...</div>;
+  }
 
   return (
     <AuthContext.Provider value={{ auth, login, logout }}>
@@ -26,5 +40,3 @@ const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export default AuthProvider;

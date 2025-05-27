@@ -1,10 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
+import { AuthProvider } from './contexts/AuthContext';
 
-const path = require("path");
-const _dirname = path.dirname("");
-const buildpath = path.join(_dirname,"../client/build");
-// appendFile.use(XPathExpression.s)
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+
+root.render(
+  <React.StrictMode>
+    <Router>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </Router>
+  </React.StrictMode>
+);

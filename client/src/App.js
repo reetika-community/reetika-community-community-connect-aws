@@ -1,18 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Login from './pages/Login.js';
-import Register from './pages/Register.js';
-import Projects from './pages/Project.js';
-import AdminDashboard from './pages/AdminDashboard.js';
-import ProtectedRoute from './components/ProtectedRoute.js';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Project from './pages/Project'; // Changed import from Projects to Project
+import AdminDashboard from './pages/AdminDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
-    <Router>
+    <> {/* Removed Router as it's now in index.js */}
       <Navbar />
       <Routes>
-        <Route path="/" element={<Projects />} />
+        <Route path="/" element={<Project />} /> {/* Changed to Project */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={
@@ -21,7 +21,7 @@ function App() {
           </ProtectedRoute>
         } />
       </Routes>
-    </Router>
+    </>
   );
 }
 
