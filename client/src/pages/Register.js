@@ -1,11 +1,14 @@
 // In Register.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from '../axios';
+import styles from './Register.module.css';
 
 const Register = () => {
   const [form, setForm] = useState({ role: 'volunteer', name: '', email: '', password: '', skills: '' });
   const [message, setMessage] = useState(''); // New state for messages
   const [isError, setIsError] = useState(false); // New state to indicate error
+    const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +19,7 @@ const Register = () => {
       const endpoint = form.role === 'admin' ? '/auth/register/admin' : '/auth/register/volunteer';
       const body = { ...form, skills: form.skills.split(',') };
       await axios.post(endpoint, body);
+      navigate('/', { state: { successMessage: 'Registration successful! Now please login.' } });
       setMessage('Registered successfully! Now please login.'); // Success message
       // Optionally, redirect to login page:
       // navigate('/login');
@@ -24,25 +28,61 @@ const Register = () => {
       setMessage(error.response?.data?.message || 'Registration failed. Please try again.'); // Error message from backend or generic
       setIsError(true);
     }
+   
   };
+    const goBack = ()=>{
+      navigate('/')
+    }
 
   return (
-    <form onSubmit={handleSubmit} className="p-4">
-      <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
-        <option value="volunteer">Volunteer</option>
-        <option value="admin">Admin</option>
-      </select>
-      <input placeholder="Name" onChange={(e) => setForm({ ...form, name: e.target.value })} />
-      <input placeholder="Email" onChange={(e) => setForm({ ...form, email: e.target.value })} />
-      <input type="password" placeholder="Password" onChange={(e) => setForm({ ...form, password: e.target.value })} />
-      {form.role === 'volunteer' && <input placeholder="Skills (comma-separated)" onChange={(e) => setForm({ ...form, skills: e.target.value })} />}
-      <button type="submit">Register</button>
-      {message && ( // Display message if present
-        <p className={`mt-2 ${isError ? 'text-red-500' : 'text-green-500'}`}>
-          {message}
-        </p>
-      )}
-    </form>
+    <form onSubmit={handleSubmit} className={styles.form}>
+  <select
+    className={styles.input}
+    value={form.role}
+    onChange={(e) => setForm({ ...form, role: e.target.value })}
+  >
+    <option value="volunteer">Volunteer</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <input
+    className={styles.input}
+    placeholder="Name"
+    onChange={(e) => setForm({ ...form, name: e.target.value })}
+  />
+  <input
+    className={styles.input}
+    placeholder="Email"
+    onChange={(e) => setForm({ ...form, email: e.target.value })}
+  />
+  <input
+    type="password"
+    className={styles.input}
+    placeholder="Password"
+    onChange={(e) => setForm({ ...form, password: e.target.value })}
+  />
+  {form.role === 'volunteer' && (
+    <input
+      className={styles.input}
+      placeholder="Skills (comma-separated)"
+      onChange={(e) => setForm({ ...form, skills: e.target.value })}
+    />
+  )}
+<div>
+  <button type="submit" className={styles.button}>
+    Register
+  </button>
+   <button  onClick={() => goBack()} className={styles.button}>
+    Back
+  </button>
+</div>
+  {message && (
+    <p className={`${styles.message} ${isError ? styles.error : styles.success}`}>
+      {message}
+    </p>
+  )}
+</form>
+
   );
 };
 

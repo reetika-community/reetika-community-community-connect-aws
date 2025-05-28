@@ -6,13 +6,15 @@ import Register from './pages/Register';
 import Project from './pages/Project'; // Changed import from Projects to Project
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
     <> {/* Removed Router as it's now in index.js */}
-      <Navbar />
+     
       <Routes>
-        <Route path="/" element={<Project />} /> {/* Changed to Project */}
+        <Route path="/" element={<HomePage />} />
+        <Route path="/projects" element={<Project />} /> {/* Changed to Project */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={
