@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const instance = axios.create({
   // Ensure this baseURL matches your backend's address and port
-  baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api', // Changed to port 5000
+  baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000/api', // Changed to port 5000
 });
 
 instance.interceptors.request.use((config) => {
