@@ -2,6 +2,35 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
+//--------------------------------------
+const AWS = require('aws-sdk');
+
+// Load credentials from IAM role or EC2 instance profile
+const ssm = new AWS.SSM({ region: 'your-region' });
+
+async function getEnvVar(name) {
+  const result = await ssm.getParameter({
+    Name: name,
+    WithDecryption: true
+  }).promise();
+
+  return result.Parameter.Value;
+}
+
+// Example usage
+(async () => {
+  const mongoUri = await getEnvVar('/community-connect/MONGO_URI');
+  const jwtSecret = await getEnvVar('/community-connect/JWT_SECRET');
+
+  // Now use these variables to connect to MongoDB or set in process.env
+  process.env.MONGO_URI = mongoUri;
+  process.env.JWT_SECRET = jwtSecret;
+})();
+
+
+
+
+//-----------------------------------
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
