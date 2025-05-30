@@ -1,4 +1,5 @@
 require('dotenv').config();
+MONGO_URI="mongodb+srv://reetikauser:test1234@cluster0.vdqw1ua.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 const nodemailer = require('nodemailer');
 const app = require('./app');
 const mongoose = require('mongoose');

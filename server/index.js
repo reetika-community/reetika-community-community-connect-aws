@@ -4,9 +4,9 @@ import App from './App';
 
 //--------------------------------------
 const AWS = require('aws-sdk');
-
+MONGO_URI="mongodb+srv://reetikauser:test1234@cluster0.vdqw1ua.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 // Load credentials from IAM role or EC2 instance profile
-const ssm = new AWS.SSM({ region: 'your-region' });
+const ssm = new AWS.SSM({ region: 'ap-south-1' });
 
 async function getEnvVar(name) {
   const result = await ssm.getParameter({
@@ -34,7 +34,7 @@ async function getEnvVar(name) {
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
+require('dotenv').config();JWT_SECRET
 
 const app = express();
 const PORT = process.env.PORT || 3000;
