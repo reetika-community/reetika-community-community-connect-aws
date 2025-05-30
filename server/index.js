@@ -2,30 +2,30 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-//--------------------------------------
-const AWS = require('aws-sdk');
-MONGO_URI="mongodb+srv://reetikauser:test1234@cluster0.vdqw1ua.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-// Load credentials from IAM role or EC2 instance profile
-const ssm = new AWS.SSM({ region: 'ap-south-1' });
+// //--------------------------------------
+// const AWS = require('aws-sdk');
 
-async function getEnvVar(name) {
-  const result = await ssm.getParameter({
-    Name: name,
-    WithDecryption: true
-  }).promise();
+// // Load credentials from IAM role or EC2 instance profile
+// const ssm = new AWS.SSM({ region: 'ap-south-1' });
 
-  return result.Parameter.Value;
-}
+// async function getEnvVar(name) {
+//   const result = await ssm.getParameter({
+//     Name: name,
+//     WithDecryption: true
+//   }).promise();
 
-// Example usage
-(async () => {
-  const mongoUri = await getEnvVar('/community-connect/MONGO_URI');
-  const jwtSecret = await getEnvVar('/community-connect/JWT_SECRET');
+//   return result.Parameter.Value;
+// }
 
-  // Now use these variables to connect to MongoDB or set in process.env
-  process.env.MONGO_URI = mongoUri;
-  process.env.JWT_SECRET = jwtSecret;
-})();
+// // Example usage
+// (async () => {
+//   const mongoUri = await getEnvVar('/community-connect/MONGO_URI');
+//   const jwtSecret = await getEnvVar('/community-connect/JWT_SECRET');
+
+//   // Now use these variables to connect to MongoDB or set in process.env
+//   process.env.MONGO_URI = mongoUri;
+//   process.env.JWT_SECRET = jwtSecret;
+// })();
 
 
 
