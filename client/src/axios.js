@@ -21,7 +21,7 @@ import axios from 'axios';
 
 const instance = axios.create({
   // Use your actual backend URL (EC2 public IP or domain name + port)
-  baseURL: process.env.REACT_APP_API_BASE_URL || 'https://d35nkvkwxhw2yr.cloudfront.net',
+  baseURL: process.env.REACT_APP_API_BASE_URL || 'https://mycommunityconnect.in/api',
 });
 
 instance.interceptors.request.use((config) => {
