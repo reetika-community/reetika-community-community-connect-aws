@@ -53,14 +53,12 @@ app.get('/api', (req, res) => {
   res.json({ message: 'Hello from Express API!' });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+// app.listen(PORT, () => {
+//   console.log(`🚀 Server running on http://localhost:${PORT}`);
+// });
+app.listen(5000, '0.0.0.0', () => {
+  console.log("Server running on port 5000");
 });
 
 
-const path = require("path");
-const _dirname = path.dirname("");
-const buildpath = path.join(_dirname,"../client/build");
-// appendFile.use(XPathExpression.s)
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+
