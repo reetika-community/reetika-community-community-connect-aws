@@ -8,26 +8,37 @@ const cors = require('cors');
 
 const app = express();
 
+// Connect to MongoDB
 connectDB();
-//-------------------
 
-// Existing middleware and routes...
+// Enable CORS (CloudFront or local frontend)
+app.use(cors({
+  origin: 'https://d35nkvkwxhw2yr.cloudfront.net', // <-- add https:// if needed
+  credentials: true
+}));
 
-// ✅ ALB health check route
-app.get('/health', (req, res) => {
+// CSP Middleware (should come before routes)
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy",
+    "default-src 'self'; font-src 'self' https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com; script-src 'self'");
+  next();
+});
+
+// JSON parser
+app.use(express.json());
+
+// ALB Health check route or default root route
+app.get('/', (req, res) => {
   res.status(200).send('OK');
 });
 
-//--------------------
-// app.use(cors());
-// Use CORS middleware
-app.use(cors({
-    origin: 'd35nkvkwxhw2yr.cloudfront.net', // Allow requests from your frontend's origin
-    credentials: true // If you're using cookies or session-based authentication
-}));
-app.use(express.json());
-
+// Your API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
+
+// Catch-all 404 (Optional)
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
 
 module.exports = app;
